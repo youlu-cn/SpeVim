@@ -87,45 +87,6 @@ autocmd FileType proto set tabstop=2 | set shiftwidth=2 | set expandtab
 " Plugins {{{
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Code complete {{{
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-inoremap <silent><expr> <TAB>
-			\ pumvisible() ? "\<C-n>" :
-			\ <SID>check_back_space() ? "\<TAB>" :
-			\ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-nmap <silent> gd :call CocActionAsync('jumpDefinition')<CR>
-nmap <silent> <leader>dt :call CocActionAsync('jumpDefinition', 'tabe')<CR>
-nmap <silent> <leader>dv :call CocActionAsync('jumpDefinition', 'vsplit')<CR>
-nmap <silent> <leader>dx :call CocActionAsync('jumpDefinition', 'split')<CR>
-nmap <silent> gb <C-O>
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-nmap <leader>rn <Plug>(coc-rename)
-
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-	if (index(['vim','help'], &filetype) >= 0)
-		execute 'h '.expand('<cword>')
-	else
-		call CocAction('doHover')
-	endif
-endfunction
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-" }}}
-
 " plist
 Plug 'darfink/vim-plist'
 
@@ -212,17 +173,6 @@ Plug 'tomtom/tcomment_vim'
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
 
-Plug 'sbdchd/neoformat'
-let g:neoformat_try_formatprg = 1
-let g:neoformat_basic_format_align = 0
-let g:neoformat_basic_format_retab = 0
-let g:neoformat_basic_format_trim = 1
-let g:neoformat_enabled_go = ['goimports', 'gofmt']
-augroup fmt
-	autocmd!
-	autocmd BufWritePre * silent! undojoin | Neoformat
-augroup END
-
 Plug 'w0rp/ale'
 
 Plug 'gcmt/wildfire.vim'
@@ -286,7 +236,8 @@ set nofoldenable
 
 set incsearch
 
-set background=light
-" set background=dark
-colorscheme solarized
+" set background=light
+set background=dark
+" colorscheme solarized
+colorscheme darth
 "}}}
